@@ -2,7 +2,10 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOAD_USER_SUCCESS,
-    LOAD_USER_FAIL
+    LOAD_USER_FAIL,
+    AUTH_SUCCESS,
+    AUTH_FAIL,
+    LOGOUT
 } from '../actions/constants';
 
 const initialState = {
@@ -16,6 +19,18 @@ const initialState = {
 export default function(state = initialState, action){
     const {type, payload} = action;
     switch(type){
+        case AUTH_SUCCESS:
+            return{
+                ...state,
+                isAuthenticated: true,
+                
+            }
+        case AUTH_FAIL:
+            return{
+                ...state,
+                isAuthenticated: false,
+                
+            }
         case LOGIN_SUCCESS:
             localStorage.setItem('access', payload.access)
             return{
@@ -35,6 +50,16 @@ export default function(state = initialState, action){
                 user:null
             }
         case LOGIN_FAIL:
+            localStorage.removeItem('access')
+            localStorage.removeItem('refresh')
+            return{
+                ...state,
+                isAuthenticated: false,
+                access: null,
+                refresh: null,
+                user: null
+            }
+        case LOGOUT:
             localStorage.removeItem('access')
             localStorage.removeItem('refresh')
             return{

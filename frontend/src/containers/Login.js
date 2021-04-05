@@ -2,7 +2,7 @@ import React, { useState} from 'react';
 import {Link, Redirect} from 'react-router-dom';
 import {connect } from 'react-redux';
 import {login} from '../actions/auth';
-const Login = ({login}) =>{
+const Login = ({login, isAuthenticated}) =>{
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -16,9 +16,12 @@ const Login = ({login}) =>{
     };
 
     //Check if user is authenticated
+    if(isAuthenticated){
+        return <Redirect to='/' />
+    }
     return(
         <section className="container col-lg-8 col-sm-12 col-md-8 mx-auto bg-white shadow rounded p-5" id="login_section">
-            <div className='container mt-5'>
+            <div className='container'>
                 <h1>Login</h1>
                 <p>Sign into your Account</p>
                 <form onSubmit={e => onSubmit(e)}>
@@ -47,18 +50,22 @@ const Login = ({login}) =>{
                     </div>
                     <button className='btn btn-primary' type='submit'>Login</button>
                 </form>
-                <p className='mt-3'>
-                    Don't have an account? <Link to='/register'>Sign Up</Link>
-                </p>
-                <p className='mt-3'>
-                    Forgot your Password? <Link to='/reset-password'>Reset Password</Link>
-                </p>
+                <div className="container text-right">
+                    <small className='mt-3'>
+                        Don't have an account? <Link to='/register'>Sign Up</Link>
+                    </small>
+                    <br/>
+                    <small className='mt-3'>
+                        Forgot your Password? <Link to='/reset-password'>Reset Password</Link>
+                    </small>
+                </div>
             </div>
         </section>
     );
 };
 
-// const mapStateToProps = state =>({
-//     //is authenticated?
-// })
-export default connect(null, {login})(Login);
+const mapStateToProps = state =>({
+    //is authenticated?
+    isAuthenticated: state.auth.isAuthenticated
+})
+export default connect(mapStateToProps, {login})(Login);
