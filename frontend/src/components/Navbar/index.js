@@ -18,12 +18,12 @@ const Navbar = ({ logout_user, isAuthenticated }) =>{
 
     const authLinks = () =>(
         <span className="navbar-text">
-            <a href="#!" className="btn btn-outline-danger" onClick={logout_user}>Logout</a>
+            <button className="btn btn-outline-danger" onClick={logout_user}>Logout</button>
         </span>
     );
     return(
-        <nav class="navbar navbar-expand-md fixed-top navbar-light" style={{backgroundColor: "#e3f2fd"}}>
-            <a className="navbar-brand" href="#">DRF Auth</a>
+        <nav className="navbar navbar-expand-md fixed-top navbar-light" style={{backgroundColor: "#e3f2fd"}}>
+            <Link className="navbar-brand" to="/">DRF Auth</Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>

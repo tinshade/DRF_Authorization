@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import Navbar from '../components/Navbar'
 import {connect} from 'react-redux';
 import {check_authenticated, load_user} from '../actions/auth';
@@ -11,7 +11,7 @@ const PrimaryLayout = (props) =>{
         <>
         <Navbar />
         <section style={{paddingTop: "10%"}} id="main">
-        {props.children}
+            {props.children}
         </section>
         </>
     );

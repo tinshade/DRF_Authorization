@@ -1,4 +1,8 @@
 import {
+    REGISTER_SUCCESS,
+    REGISTER_FAIL,
+    ACTIVATION_SUCCESS,
+    ACTIVATION_FAIL,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOAD_USER_SUCCESS,
@@ -20,9 +24,14 @@ const initialState = {
 }
 
 
-export default function(state = initialState, action){
+export default function driver(state = initialState, action){
     const {type, payload} = action;
     switch(type){
+        case REGISTER_SUCCESS:
+            return{
+                ...state,
+                isAuthenticated:false,
+            }
         case AUTH_SUCCESS:
             return{
                 ...state,
@@ -54,15 +63,7 @@ export default function(state = initialState, action){
                 user:null
             }
         case LOGIN_FAIL:
-            localStorage.removeItem('access')
-            localStorage.removeItem('refresh')
-            return{
-                ...state,
-                isAuthenticated: false,
-                access: null,
-                refresh: null,
-                user: null
-            }
+        case REGISTER_FAIL:
         case LOGOUT:
             localStorage.removeItem('access')
             localStorage.removeItem('refresh')
@@ -77,6 +78,11 @@ export default function(state = initialState, action){
         case PASSWORD_RESET_FAIL:
         case PASSWORD_RESET_CONFIRM_SUCCESS:
         case PASSWORD_RESET_CONFIRM_FAIL:
+            return{
+                ...state
+            }
+        case ACTIVATION_SUCCESS:
+        case ACTIVATION_FAIL:
             return{
                 ...state
             }
