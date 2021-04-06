@@ -5,6 +5,10 @@ import {
     LOAD_USER_FAIL,
     AUTH_SUCCESS,
     AUTH_FAIL,
+    PASSWORD_RESET_SUCCESS,
+    PASSWORD_RESET_FAIL,
+    PASSWORD_RESET_CONFIRM_SUCCESS,
+    PASSWORD_RESET_CONFIRM_FAIL,
     LOGOUT
 } from './constants';
 import axios from 'axios';
@@ -70,7 +74,7 @@ export const load_user = () => async dispatch =>{
 };
 
 export const login = (email, password) => async dispatch =>{
-    console.log(process.env.REACT_APP_API_URL);
+
     const config = {
         headers:{
             'Accept': 'application/json',
@@ -93,8 +97,52 @@ export const login = (email, password) => async dispatch =>{
     }
 };
 
-export const logout = () => dispatch => {
+export const logout_user = () => dispatch => {
     dispatch({
         type: LOGOUT
     });
+};
+
+export const reset_password = (email) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const body = JSON.stringify({ email });
+
+    try {
+        await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/reset_password/`, body, config);
+
+        dispatch({
+            type: PASSWORD_RESET_SUCCESS
+        });
+    } catch (err) {
+        dispatch({
+            type: PASSWORD_RESET_FAIL
+        });
+    }
+};
+
+export const reset_password_confirm = (uid, token, new_password, re_new_password) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const body = JSON.stringify({ uid, token, new_password, re_new_password });
+
+    try {
+        await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/reset_password_confirm/`, body, config);
+
+        dispatch({
+            type: PASSWORD_RESET_CONFIRM_SUCCESS
+        });
+    } catch (err) {
+        dispatch({
+            type: PASSWORD_RESET_CONFIRM_FAIL
+        });
+    }
 };

@@ -1,9 +1,9 @@
 import React, {Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
-import { logout } from '../../actions/auth';
+import { logout_user } from '../../actions/auth';
 
-const Navbar = ({ logout, isAuthenticated }) =>{
+const Navbar = ({ logout_user, isAuthenticated }) =>{
 
     const commonLinks = () => (
         <Fragment>
@@ -18,7 +18,7 @@ const Navbar = ({ logout, isAuthenticated }) =>{
 
     const authLinks = () =>(
         <span className="navbar-text">
-            <a href="#!" className="btn btn-outline-danger" onClick={logout}>Logout</a>
+            <a href="#!" className="btn btn-outline-danger" onClick={logout_user}>Logout</a>
         </span>
     );
     return(
@@ -44,4 +44,4 @@ const mapStateToProps = state =>({
     isAuthenticated : state.auth.isAuthenticated
 })
 
-export default connect(mapStateToProps, { logout })(Navbar);
+export default connect(mapStateToProps, { logout_user })(Navbar);
